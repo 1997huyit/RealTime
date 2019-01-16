@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Notifications\NewLessonNotification;
+
 use Illuminate\Http\Request;
 use Pusher\Pusher;
-use App\Lesson;
-use App\User;
+
 class SendMessageController extends Controller
 {
     public function index()
     {
-        return view('sendmesage');
+        return view('send_mesage');
     }
     public function sendMessage(Request $request)
     {
@@ -33,16 +32,7 @@ class SendMessageController extends Controller
             env('PUSHER_APP_ID'),
             $options
         );
-        $lesson = new Lesson;
-        $lesson->user_id = auth()->user()->id;
-        $lesson->title = $data['title'];
-        $lesson->body = $data['content'];
-        $lesson->save();
-        $user =User::where('id','!=',auth()->user()->id)->get();
 
-        if (\Notification::send($user,new NewLessonNotification(Lesson::latest('id')->first()))) {
-            return back();
-        }
         $pusher->trigger('Notify', 'send-message', $data);
 
         return redirect()->route('send');

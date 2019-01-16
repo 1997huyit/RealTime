@@ -27,41 +27,25 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                @if(Auth::check())
-                    <li class="dropdown dropdown-notifications">
-                        <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
-                            <i data-count="{{auth()->user()->unreadNotifications->count()}}" class="glyphicon glyphicon-bell notification-icon"></i>
-                        </a>
+                <li class="dropdown dropdown-notifications">
+                    <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+                        <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
+                    </a>
 
-                       
-
-                    
-                        <div class="dropdown-container">
-                            <div class="dropdown-toolbar">
-                                <div class="dropdown-toolbar-actions">
-                                    <a href="#">Mark all as read</a>
-                                </div>
-                                <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">{{auth()->user()->unreadNotifications->count()}}</span>)</h3>
+                    <div class="dropdown-container">
+                        <div class="dropdown-toolbar">
+                            <div class="dropdown-toolbar-actions">
+                                <a href="#">Mark all as read</a>
                             </div>
-                            <ul class="dropdown-menu">
-                                    @if(auth()->user()->unreadNotifications->count())
-                                    @foreach (auth()->user()->unreadNotifications as $item)
-                                    <a class="dropdown-item" href="#">
-                                       {{$item->data['lesson']['title']}}
-                                        </a>
-                                    @endforeach
-                                @else
-                                <a class="dropdown-item" href="#">
-                                        No notifi
-                                         </a>
-                                @endif
-                            </ul>
-                            <div class="dropdown-footer text-center">
-                                <a href="#">View All</a>
-                            </div>
+                            <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
                         </div>
-                    </li>
-                @endif
+                        <ul class="dropdown-menu">
+                        </ul>
+                        <div class="dropdown-footer text-center">
+                            <a href="#">View All</a>
+                        </div>
+                    </div>
+                </li>
                 <li><a href="#">Timeline</a></li>
                 <li><a href="#">Friends</a></li>
             </ul>

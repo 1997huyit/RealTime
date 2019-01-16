@@ -11,14 +11,8 @@
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/send', 'SendMessageController@index')->name('send');
 Route::post('/postMessage', 'SendMessageController@sendMessage')->name('postMessage');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/lesson/create','LessonController@newlesson');
-Route::post('/notification/lesson/notification','LessonController@notification');
