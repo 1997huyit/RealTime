@@ -16,17 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
-        'password',
-        'phone',
-        'passport_1',
-        'passport_2',
-        'birthday',
-        'address',
-        'sex',
-        'user_type_id',
-        'avatar',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -37,12 +27,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function role()
-     {
-          return $this->belongsTo(User_type::class, 'user_type_id',  'id');
-     }
-     public function day_off(){
-        return $this->hasOne('App\Day_off', 'user_id', 'id');
-    }
-
 }

@@ -8,26 +8,38 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('Leaderboard', require('./components/Leaderboard.vue').default);
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+
+// const app = new Vue({
+//     el: '#app'
+// });
+Vue.component('lesson', require('./components/LessonNotification.vue'));
 const app = new Vue({
-    el: '#order'
+    el: '#app',
+    data:{
+        lessons: '',
+    },
+    created(){
+        if(window.Laravel.userId){
+            axios.post('/notification/lesson/notification').then(response => {
+                this.lessons = response.data;
+                console.log(response.data)
+            });
+
+            Echo.private('App.User.'+ window.Laravel.userId).notification((response) =>{
+                data = {"data":response};
+                this.lessons.push(data);
+                console.log(response);
+            });
+        }
+    }
 });
